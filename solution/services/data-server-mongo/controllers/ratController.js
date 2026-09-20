@@ -22,7 +22,7 @@ exports.getRats = async (req, res) => {
         const data = await ratService.fetchRatings(params);
 
         if (!data || !data.items || data.items.length === 0) {
-            return res.status(404).json({ message: "No ratings found" });
+            return res.status(200).json({ items: [], total: 0, totalPages: 1 });
         }
 
         return res.json(data);
@@ -47,10 +47,7 @@ exports.getRats = async (req, res) => {
 exports.createRating = async (req, res) => {
     try {
         const ratingData = req.body;
-
-        // Delegates to service to update stats (and optionally save rating)
         const newRating = await ratService.createRating(ratingData);
-
         return res.status(201).json(newRating);
     } catch (error) {
         console.error("Error creating rating:", error);

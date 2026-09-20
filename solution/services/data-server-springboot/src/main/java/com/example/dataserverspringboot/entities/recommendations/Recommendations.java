@@ -11,91 +11,91 @@ import java.util.Objects;
 @IdClass(Recommendations.RecommendationsId.class)
 public class Recommendations {
 
-    @Schema(description = "Source Anime MyAnimeList ID (Composite Key)", example = "1")
-    @Id
-    @Column(name = "mal_id")
-    private Integer malId;
+  @Schema(description = "Source Anime MyAnimeList ID (Composite Key)", example = "1")
+  @Id
+  @Column(name = "mal_id")
+  private Integer malId;
 
-    @Schema(description = "Recommended Anime MyAnimeList ID (Composite Key)", example = "5")
-    @Id
-    @Column(name = "recommendation_mal_id")
+  @Schema(description = "Recommended Anime MyAnimeList ID (Composite Key)", example = "5")
+  @Id
+  @Column(name = "recommendation_mal_id")
+  private Integer recommendationMalId;
+
+  // Constructors
+  public Recommendations() {}
+
+  public Recommendations(Integer malId, Integer recommendationMalId) {
+    this.malId = malId;
+    this.recommendationMalId = recommendationMalId;
+  }
+
+  // Getters and Setters
+  public Integer getMalId() {
+    return malId;
+  }
+
+  public void setMalId(Integer malId) {
+    this.malId = malId;
+  }
+
+  public Integer getRecommendationMalId() {
+    return recommendationMalId;
+  }
+
+  public void setRecommendationMalId(Integer recommendationMalId) {
+    this.recommendationMalId = recommendationMalId;
+  }
+
+  @Override
+  public String toString() {
+    return "Recommendations{"
+        + "mal_id="
+        + malId
+        + ", recommendation_mal_id="
+        + recommendationMalId
+        + '}';
+  }
+
+  // Composite Key Class
+  public static class RecommendationsId implements Serializable {
+    private Integer malId;
     private Integer recommendationMalId;
 
-    // Constructors
-    public Recommendations() {
+    public RecommendationsId() {}
+
+    public RecommendationsId(Integer malId, Integer recommendationMalId) {
+      this.malId = malId;
+      this.recommendationMalId = recommendationMalId;
     }
 
-    public Recommendations(Integer malId, Integer recommendationMalId) {
-        this.malId = malId;
-        this.recommendationMalId = recommendationMalId;
-    }
-
-    // Getters and Setters
     public Integer getMalId() {
-        return malId;
+      return malId;
     }
 
     public void setMalId(Integer malId) {
-        this.malId = malId;
+      this.malId = malId;
     }
 
     public Integer getRecommendationMalId() {
-        return recommendationMalId;
+      return recommendationMalId;
     }
 
     public void setRecommendationMalId(Integer recommendationMalId) {
-        this.recommendationMalId = recommendationMalId;
+      this.recommendationMalId = recommendationMalId;
     }
 
     @Override
-    public String toString() {
-        return "Recommendations{" +
-                "mal_id=" + malId +
-                ", recommendation_mal_id=" + recommendationMalId +
-                '}';
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      RecommendationsId that = (RecommendationsId) o;
+      return Objects.equals(malId, that.malId)
+          && Objects.equals(recommendationMalId, that.recommendationMalId);
     }
 
-    // Composite Key Class
-    public static class RecommendationsId implements Serializable {
-        private Integer malId;
-        private Integer recommendationMalId;
-
-        public RecommendationsId() {
-        }
-
-        public RecommendationsId(Integer malId, Integer recommendationMalId) {
-            this.malId = malId;
-            this.recommendationMalId = recommendationMalId;
-        }
-
-        public Integer getMalId() {
-            return malId;
-        }
-
-        public void setMalId(Integer malId) {
-            this.malId = malId;
-        }
-
-        public Integer getRecommendationMalId() {
-            return recommendationMalId;
-        }
-
-        public void setRecommendationMalId(Integer recommendationMalId) {
-            this.recommendationMalId = recommendationMalId;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            RecommendationsId that = (RecommendationsId) o;
-            return Objects.equals(malId, that.malId) &&
-                   Objects.equals(recommendationMalId, that.recommendationMalId);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(malId, recommendationMalId);
-        }
+    @Override
+    public int hashCode() {
+      return Objects.hash(malId, recommendationMalId);
     }
+  }
 }

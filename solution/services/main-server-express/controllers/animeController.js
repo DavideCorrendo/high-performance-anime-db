@@ -1,11 +1,11 @@
 const { apiMongo, apiPostgres } = require('./apiClients.js');
 
 const SORT_OPTIONS = [
-	{ value: '', label: 'Default' },
-	{ value: 'popularity', label: 'Most Popular' },
-	{ value: '-popularity', label: 'Less Popular' },
-	{ value: 'title', label: 'Name A-Z' },
-	{ value: '-title', label: 'Name Z-A' }
+  { value: '', label: 'Default' },
+  { value: 'popularity', label: 'Most Popular' },
+  { value: '-popularity', label: 'Less Popular' },
+  { value: 'title', label: 'Name A-Z' },
+  { value: '-title', label: 'Name Z-A' },
 ];
 
 const TYPE_OPTIONS = [
@@ -21,7 +21,7 @@ const TYPE_OPTIONS = [
   { value: 'TV', label: 'TV' },
   { value: 'TVSpecial', label: 'TVSpecial' },
   { value: '[Adventure]', label: 'Adventure' },
-  { value: '[Mecha]', label: 'Mecha' }
+  { value: '[Mecha]', label: 'Mecha' },
 ];
 
 const STATUS_OPTIONS = [
@@ -29,7 +29,7 @@ const STATUS_OPTIONS = [
   { value: 'Currently Airing', label: 'Currently Airing' },
   { value: 'Finished Airing', label: 'Finished Airing' },
   { value: 'Not yet aired', label: 'Not yet aired' },
-  { value: '[Shin-Ei Animation]', label: 'Shin-Ei Animation' }
+  { value: '[Shin-Ei Animation]', label: 'Shin-Ei Animation' },
 ];
 
 const RATING_OPTIONS = [
@@ -37,9 +37,12 @@ const RATING_OPTIONS = [
   { value: 'G - All Ages', label: 'G - All Ages' },
   { value: 'PG - Children', label: 'PG - Children' },
   { value: 'PG-13 - Teens 13 or older', label: 'PG-13 - Teens 13 or older' },
-  { value: 'R - 17+ (violence & profanity)', label: 'R - 17+ (violence & profanity)' },
+  {
+    value: 'R - 17+ (violence & profanity)',
+    label: 'R - 17+ (violence & profanity)',
+  },
   { value: 'R+ - Mild Nudity', label: 'R+ - Mild Nudity' },
-  { value: 'Rx - Hentai', label: 'Rx - Hentai' }
+  { value: 'Rx - Hentai', label: 'Rx - Hentai' },
 ];
 
 const SOURCE_OPTIONS = [
@@ -85,7 +88,7 @@ const GENRE_OPTIONS = [
   { value: 'slice of life', label: 'Slice of Life' },
   { value: 'sports', label: 'Sports' },
   { value: 'supernatural', label: 'Supernatural' },
-  { value: 'suspense', label: 'Suspense' }
+  { value: 'suspense', label: 'Suspense' },
 ];
 
 const normalizeEpisodes = (value) => {
@@ -113,28 +116,28 @@ const buildFiltersModel = (query) => {
     episodes: activeEpisodes,
     sortOptions: SORT_OPTIONS.map((option) => ({
       ...option,
-      selected: option.value === activeSort
+      selected: option.value === activeSort,
     })),
     typeOptions: TYPE_OPTIONS.map((option) => ({
       ...option,
-      selected: option.value === activeType
+      selected: option.value === activeType,
     })),
     statusOptions: STATUS_OPTIONS.map((option) => ({
       ...option,
-      selected: option.value === activeStatus
+      selected: option.value === activeStatus,
     })),
     ratingOptions: RATING_OPTIONS.map((option) => ({
       ...option,
-      selected: option.value === activeRating
+      selected: option.value === activeRating,
     })),
     genreOptions: GENRE_OPTIONS.map((option) => ({
       ...option,
-      selected: option.value === activeGenres
+      selected: option.value === activeGenres,
     })),
     sourceOptions: SOURCE_OPTIONS.map((option) => ({
       ...option,
-      selected: option.value === activeSource
-    }))
+      selected: option.value === activeSource,
+    })),
   };
 };
 
@@ -151,10 +154,13 @@ exports.list = async (req, res, next) => {
     if (req.query.status) params.set('status', req.query.status);
     if (req.query.rating) params.set('rating', req.query.rating);
     if (req.query.genres) params.set('genres', req.query.genres);
-    if (!req.query.genres && req.query.genre) params.set('genres', req.query.genre);
+    if (!req.query.genres && req.query.genre)
+      params.set('genres', req.query.genre);
     if (req.query.source) params.set('source', req.query.source);
     if (req.query.sort) params.set('sort', req.query.sort);
-    const episodesParam = normalizeEpisodes(req.query.episodes ?? req.query.episode);
+    const episodesParam = normalizeEpisodes(
+      req.query.episodes ?? req.query.episode
+    );
     if (episodesParam) params.set('episodes', episodesParam);
 
     params.set('page', String(page));
@@ -179,7 +185,9 @@ exports.list = async (req, res, next) => {
     if (episodesParam) {
       paginationQuery.set('episodes', episodesParam);
     }
-    const filtersQuery = paginationQuery.toString() ? `&${paginationQuery.toString()}` : '';
+    const filtersQuery = paginationQuery.toString()
+      ? `&${paginationQuery.toString()}`
+      : '';
 
     res.render('anime/anime_list', {
       title: 'Anime',
@@ -192,9 +200,10 @@ exports.list = async (req, res, next) => {
         hasPrev: page > 1,
         prevPage: page - 1,
         hasNext: page < totalPages,
-        nextPage: parseInt(page) + 1
+        nextPage: parseInt(page) + 1,
       },
-      warning: !animes || animes.length === 0 ? 'No anime found in database.' : null
+      warning:
+        !animes || animes.length === 0 ? 'No anime found in database.' : null,
     });
   } catch (err) {
     res.render('anime/anime_list', {
@@ -203,7 +212,8 @@ exports.list = async (req, res, next) => {
       filters: buildFiltersModel({}),
       filtersQuery: '',
       currentPage: 'anime',
-      error: 'Impossibile caricare i dati degli anime. Il server potrebbe non essere disponibile.'
+      error:
+        'Impossibile caricare i dati degli anime. Il server potrebbe non essere disponibile.',
     });
   }
 };
@@ -220,23 +230,25 @@ exports.detail = async (req, res, next) => {
       status: req.query.status || null,
       rewatching: req.query.rewatching || null,
       sortBy: req.query.sortBy || 'score',
-      sortOrder: req.query.sortOrder || 'desc'
+      sortOrder: req.query.sortOrder || 'desc',
     };
 
     const response = await apiPostgres.get(`/api/details/${id}`);
-    const charactersResponse = await apiPostgres.get('/api/characters?page=1&pageSize=12');
+    const charactersResponse = await apiPostgres.get(
+      '/api/characters?page=1&pageSize=12'
+    );
     const recommendationsResponse = await apiPostgres.get(
-        `/api/details/${id}/recommendations`
+      `/api/details/${id}/recommendations`
     );
     const raw = response.data || {};
     const charactersData = charactersResponse?.data;
     const relatedCharacters = Array.isArray(charactersData)
-        ? charactersData
-        : charactersData?.items || charactersData?.related_characters || [];
+      ? charactersData
+      : charactersData?.items || charactersData?.related_characters || [];
     const recommendationsData = recommendationsResponse?.data;
     const recommendations = Array.isArray(recommendationsData)
-        ? recommendationsData
-        : recommendationsData?.recommendations || [];
+      ? recommendationsData
+      : recommendationsData?.recommendations || [];
 
     // Ratings are loaded asynchronously on the client after page load.
     let ratings = null;
@@ -244,8 +256,10 @@ exports.detail = async (req, res, next) => {
 
     const buildQueryString = (pageNum) => {
       const params = new URLSearchParams({ page: pageNum });
-      if (filters.minScore !== null) params.append('minScore', filters.minScore);
-      if (filters.maxScore !== null) params.append('maxScore', filters.maxScore);
+      if (filters.minScore !== null)
+        params.append('minScore', filters.minScore);
+      if (filters.maxScore !== null)
+        params.append('maxScore', filters.maxScore);
       if (filters.status) params.append('status', filters.status);
       if (filters.rewatching) params.append('rewatching', filters.rewatching);
       if (filters.sortBy) params.append('sortBy', filters.sortBy);
@@ -255,7 +269,9 @@ exports.detail = async (req, res, next) => {
 
     const normalizeList = (value) => {
       if (Array.isArray(value)) {
-        return value.filter((item) => item !== null && item !== undefined && item !== '');
+        return value.filter(
+          (item) => item !== null && item !== undefined && item !== ''
+        );
       }
       if (value === null || value === undefined) {
         return [];
@@ -270,16 +286,18 @@ exports.detail = async (req, res, next) => {
           try {
             const parsed = JSON.parse(normalized);
             if (Array.isArray(parsed)) {
-              return parsed.filter((item) => item !== null && item !== undefined && item !== '');
+              return parsed.filter(
+                (item) => item !== null && item !== undefined && item !== ''
+              );
             }
           } catch (err) {
             // Fallback to splitting below.
           }
           const items = trimmed
-              .slice(1, -1)
-              .split(',')
-              .map((item) => item.trim().replace(/^["']|["']$/g, ''))
-              .filter((item) => item !== '');
+            .slice(1, -1)
+            .split(',')
+            .map((item) => item.trim().replace(/^["']|["']$/g, ''))
+            .filter((item) => item !== '');
           return items;
         }
         return [trimmed];
@@ -288,7 +306,7 @@ exports.detail = async (req, res, next) => {
     };
 
     const formatValue = (value) =>
-        value === null || value === undefined || value === '' ? 'N/A' : value;
+      value === null || value === undefined || value === '' ? 'N/A' : value;
 
     const genres = normalizeList(raw.genres);
     const themes = normalizeList(raw.themes);
@@ -315,9 +333,11 @@ exports.detail = async (req, res, next) => {
       status_display: formatValue(raw.status),
       episodes_display: formatValue(raw.episodes),
       episodes_text:
-          raw.episodes === null || raw.episodes === undefined || raw.episodes === ''
-              ? 'N/A'
-              : `${raw.episodes} episodes`,
+        raw.episodes === null ||
+        raw.episodes === undefined ||
+        raw.episodes === ''
+          ? 'N/A'
+          : `${raw.episodes} episodes`,
       season_display: formatValue(raw.season),
       year_display: formatValue(raw.year),
       rating_display: formatValue(raw.rating),
@@ -340,7 +360,7 @@ exports.detail = async (req, res, next) => {
       related_characters: relatedCharacters,
       has_related_characters: relatedCharacters.length > 0,
       recommendations,
-      hasRelatedAnimes: recommendations.length > 0
+      hasRelatedAnimes: recommendations.length > 0,
     };
 
     res.render('anime/anime_detail', {
@@ -356,16 +376,16 @@ exports.detail = async (req, res, next) => {
         hasNext: page < totalPages,
         nextPage: page + 1,
         prevUrl: buildQueryString(page - 1),
-        nextUrl: buildQueryString(page + 1)
+        nextUrl: buildQueryString(page + 1),
       },
-      currentPage: 'anime'
+      currentPage: 'anime',
     });
   } catch (err) {
     console.error('Error in detail controller:', err);
     res.render('anime/anime_detail', {
       title: 'Anime Detail',
       anime: null,
-      error: 'Unable to load anime details.'
+      error: 'Unable to load anime details.',
     });
   }
 };
@@ -377,13 +397,14 @@ exports.characters = async (req, res) => {
     res.render('anime/related_characters', {
       title: `Recommendations for ${response.data.title}`,
       related_characters: response.data.related_characters,
-      currentPage: 'anime'
+      currentPage: 'anime',
     });
   } catch (err) {
     res.render('related_characters', {
       title: 'Characters',
       recommendations: null,
-      error: 'Impossibile caricare i personaggi dell\'anime. Il server potrebbe non essere disponibile.'
+      error:
+        "Impossibile caricare i personaggi dell'anime. Il server potrebbe non essere disponibile.",
     });
   }
 };
@@ -391,17 +412,19 @@ exports.characters = async (req, res) => {
 exports.reccomendations = async (req, res) => {
   try {
     const { id } = req.params;
-    const response = await apiPostgres.get(`/api/details/${id}/recommendations`);
+    const response = await apiPostgres.get(
+      `/api/details/${id}/recommendations`
+    );
     res.render('anime/anime_recommendations', {
       title: `Recommendations for ${response.data.title}`,
       recommendations: response.data.recommendations,
-      currentPage: 'anime'
+      currentPage: 'anime',
     });
   } catch (err) {
     res.render('anime/anime_recommendations', {
       title: 'Recommendations',
       recommendations: null,
-      error: 'Unable to load recommendations.'
+      error: 'Unable to load recommendations.',
     });
   }
 };
@@ -419,7 +442,7 @@ exports.getRatingsJson = async (req, res) => {
       status: req.query.status || null,
       rewatching: req.query.rewatching || null,
       sortBy: req.query.sortBy || 'score',
-      sortOrder: req.query.sortOrder || 'desc'
+      sortOrder: req.query.sortOrder || 'desc',
     };
 
     const params = new URLSearchParams();
@@ -463,15 +486,15 @@ exports.getRatingsJson = async (req, res) => {
       pagination: {
         currentPage: page,
         totalPages: totalPages,
-        total: total
-      }
+        total: total,
+      },
     });
   } catch (err) {
     console.error('Error fetching ratings:', err.message);
     res.status(500).json({
       ratings: [],
       pagination: { currentPage: 1, totalPages: 1, total: 0 },
-      error: 'Unable to load ratings'
+      error: 'Unable to load ratings',
     });
   }
 };

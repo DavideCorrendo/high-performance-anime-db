@@ -1,4 +1,3 @@
-/* Navbar */
 .navbar {
   background: black;
   padding: 1rem 0;
@@ -12,19 +11,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.navbar .container {
   color: rgb(255, 255, 255);
 }
 
 .logo-container {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: center;
-	align-content: stretch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
 }
 
 .logo-img {
@@ -51,4 +47,46 @@
 
 .nav-links a:hover {
   opacity: 0.8;
+}
+
+.user-menu {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.user-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition:
+    opacity 0.3s,
+    background-color 0.3s;
+}
+
+.user-menu a:hover {
+  opacity: 0.8;
+}
+
+.register-btn,
+.logout-btn {
+  background-color: #4caf50;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.register-btn:hover,
+.logout-btn:hover {
+  background-color: #45a049;
+  opacity: 1;
+}
+
+.logout-btn {
+  background-color: #d32f2f;
+}
+
+.logout-btn:hover {
+  background-color: #b71c1c;
 }

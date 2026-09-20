@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var jwt = require('jsonwebtoken');
 
 var indexRouter = require('./routes/index');
 var animeRouter = require('./routes/anime');
@@ -26,7 +27,6 @@ const swaggerOptions = {
     },
     servers: [{ url: 'http://localhost:3000' }],
   },
-
   apis: ['./routes/*.js'],
 };
 
@@ -37,20 +37,17 @@ require('dotenv').config();
 const mockDataStatus = process.env.USE_MOCK_DATA === 'true';
 app.MockDataStatus = mockDataStatus;
 
-// view engine setup just for server start
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.set('view options', { layout: 'layout/main' });
 
-// Register custom handlebars helpers
 const hbs = require('hbs');
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
-hbs.registerHelper('json', function(obj) {
+hbs.registerHelper('json', function (obj) {
   return JSON.stringify(obj, null, 2);
 });
 
-
-hbs.registerHelper('any', function() {
+hbs.registerHelper('any', function () {
   const args = Array.prototype.slice.call(arguments);
   const options = args.pop();
   for (let i = 0; i < args.length; i++) {
@@ -61,7 +58,7 @@ hbs.registerHelper('any', function() {
   return options.inverse(this);
 });
 
-hbs.registerHelper('isHttpUrl', function(value) {
+hbs.registerHelper('isHttpUrl', function (value) {
   if (typeof value !== 'string') {
     return false;
   }
@@ -69,11 +66,27 @@ hbs.registerHelper('isHttpUrl', function(value) {
   return /^https?:\/\//i.test(trimmed);
 });
 
-// middleware -> pipeline richieste
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use((req, res, next) => {
+  const token = req.cookies.auth_token;
+  if (token) {
+    try {
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET || 'your_super_secret_key'
+      );
+      res.locals.user = decoded;
+    } catch (err) {
+      res.clearCookie('auth_token');
+    }
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -83,18 +96,13 @@ app.use('/characters', charactersRouter);
 app.use('/staff', staffRouter);
 app.use('/profile', profileRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });

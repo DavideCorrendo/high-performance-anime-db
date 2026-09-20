@@ -1,6 +1,8 @@
 -- Tabella per i profili utente
 CREATE TABLE profiles (
     username VARCHAR(255) PRIMARY KEY,
+    password_hash VARCHAR(255) DEFAULT NULL,
+    security_level VARCHAR(50) NOT NULL DEFAULT 'user',
     join_date DATE,
     location VARCHAR(255),
     birth_date DATE,

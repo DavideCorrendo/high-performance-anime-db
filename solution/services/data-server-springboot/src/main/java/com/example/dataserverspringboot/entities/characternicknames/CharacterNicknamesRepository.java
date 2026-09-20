@@ -10,17 +10,14 @@ import org.springframework.stereotype.Repository;
 
 @Hidden
 @Repository
-public interface CharacterNicknamesRepository extends JpaRepository<CharacterNicknames, CharacterNicknames.CharacterNicknamesId> {
+public interface CharacterNicknamesRepository
+    extends JpaRepository<CharacterNicknames, CharacterNicknames.CharacterNicknamesId> {
 
-    /**
-     * Search by nickname (case-insensitive, partial match)
-     */
-    @Query("SELECT e FROM CharacterNicknames e WHERE LOWER(CAST(e.nickname AS string)) LIKE LOWER(CONCAT('%', :search, '%'))")
-    Page<CharacterNicknames> searchByNickname(@Param("search") String search, Pageable pageable);
+  /** Search by nickname (case-insensitive, partial match) */
+  @Query(
+      "SELECT e FROM CharacterNicknames e WHERE LOWER(CAST(e.nickname AS string)) LIKE LOWER(CONCAT('%', :search, '%'))")
+  Page<CharacterNicknames> searchByNickname(@Param("search") String search, Pageable pageable);
 
-    /**
-     * Find by character_mal_id
-     */
-    Page<CharacterNicknames> findByCharacterMalId(Integer characterMalId, Pageable pageable);
-
+  /** Find by character_mal_id */
+  Page<CharacterNicknames> findByCharacterMalId(Integer characterMalId, Pageable pageable);
 }

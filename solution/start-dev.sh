@@ -1,5 +1,22 @@
 #!/bin/bash
 
+cleanup() {
+    echo -e "\n🛑 Shutting down development environment..."
+    
+    # 1. Gracefully terminate all processes in this script's process group
+    kill -- -$$ 2>/dev/null
+    
+    # 2. Force kill anything still clinging to your specific ports
+    fuser -k ${MAIN_EXPRESS_PORT:-3000}/tcp 2>/dev/null
+    fuser -k ${DATA_EXPRESS_PORT:-3001}/tcp 2>/dev/null
+    fuser -k ${DATA_SPRING_PORT:-8080}/tcp 2>/dev/null
+    
+    echo "✅ Ports cleared and processes stopped."
+}
+
+# Bind the cleanup function to exit and interrupt signals
+trap cleanup EXIT SIGINT SIGTERM
+
 echo "🚀 Starting development environment..."
 
 # Load environment variables from .env file

@@ -5,6 +5,8 @@
 -- Tabella per i profili utente
 CREATE TABLE profiles (
     username VARCHAR(255) PRIMARY KEY,
+    password_hash VARCHAR(255) DEFAULT NULL,
+    security_level VARCHAR(50) NOT NULL DEFAULT 'user',
     gender VARCHAR(50),
     birthday DATE,
     location VARCHAR(255),

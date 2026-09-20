@@ -8,157 +8,173 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "person_details")
 public class PersonDetails {
-    
-    @Schema(description = "Person MyAnimeList ID (Primary Key)", example = "1")
-    @Id
-    @Column(name = "person_mal_id")
-    private Integer personMalId;
 
-    @Schema(description = "MyAnimeList URL", example = "https://myanimelist.net/people/1")
-    @Column(name = "url")
-    private String url;
+  @Schema(description = "Person MyAnimeList ID (Primary Key)", example = "1")
+  @Id
+  @Column(name = "person_mal_id")
+  private Integer personMalId;
 
-    @Schema(description = "Personal Website URL", example = "http://www.example.com")
-    @Column(name = "website_url")
-    private String websiteUrl;
+  @Schema(description = "MyAnimeList URL", example = "https://myanimelist.net/people/1")
+  @Column(name = "url")
+  private String url;
 
-    @Schema(description = "Image URL", example = "https://cdn.myanimelist.net/images/people/1.jpg")
-    @Column(name = "image_url")
-    private String imageUrl;
+  @Schema(description = "Personal Website URL", example = "http://www.example.com")
+  @Column(name = "website_url")
+  private String websiteUrl;
 
-    @Schema(description = "Full Name", example = "Miyazaki Hayao")
-    @Column(name = "name")
-    private String name;
+  @Schema(description = "Image URL", example = "https://cdn.myanimelist.net/images/people/1.jpg")
+  @Column(name = "image_url")
+  private String imageUrl;
 
-    @Schema(description = "Given Name", example = "Hayao")
-    @Column(name = "given_name")
-    private String givenName;
+  @Schema(description = "Full Name", example = "Miyazaki Hayao")
+  @Column(name = "name")
+  private String name;
 
-    @Schema(description = "Family Name", example = "Miyazaki")
-    @Column(name = "family_name")
-    private String familyName;
+  @Schema(description = "Given Name", example = "Hayao")
+  @Column(name = "given_name")
+  private String givenName;
 
-    @Schema(description = "Birthday", example = "1941-01-05")
-    @Column(name = "birthday")
-    private LocalDate birthday;
+  @Schema(description = "Family Name", example = "Miyazaki")
+  @Column(name = "family_name")
+  private String familyName;
 
-    @Schema(description = "User Favorites Count", example = "30000")
-    @Column(name = "favorites")
-    private Integer favorites;
+  @Schema(description = "Birthday", example = "1941-01-05")
+  @Column(name = "birthday")
+  private LocalDate birthday;
 
-    @Schema(description = "Relevant Location/Hometown", example = "Tokyo, Japan")
-    @Column(name = "relevant_location")
-    private String relevantLocation;
+  @Schema(description = "User Favorites Count", example = "30000")
+  @Column(name = "favorites")
+  private Integer favorites;
 
-    // Constructors
-    public PersonDetails() {
-    }
+  @Schema(description = "Relevant Location/Hometown", example = "Tokyo, Japan")
+  @Column(name = "relevant_location")
+  private String relevantLocation;
 
-    public PersonDetails(Integer personMalId, String url, String websiteUrl, String imageUrl,
-                          String name, String givenName, String familyName, LocalDate birthday,
-                          Integer favorites, String relevantLocation) {
-        this.personMalId = personMalId;
-        this.url = url;
-        this.websiteUrl = websiteUrl;
-        this.imageUrl = imageUrl;
-        this.name = name;
-        this.givenName = givenName;
-        this.familyName = familyName;
-        this.birthday = birthday;
-        this.favorites = favorites;
-        this.relevantLocation = relevantLocation;
-    }
+  // Constructors
+  public PersonDetails() {}
 
-    // Getters and Setters
-    public Integer getPersonMalId() {
-        return personMalId;
-    }
+  public PersonDetails(
+      Integer personMalId,
+      String url,
+      String websiteUrl,
+      String imageUrl,
+      String name,
+      String givenName,
+      String familyName,
+      LocalDate birthday,
+      Integer favorites,
+      String relevantLocation) {
+    this.personMalId = personMalId;
+    this.url = url;
+    this.websiteUrl = websiteUrl;
+    this.imageUrl = imageUrl;
+    this.name = name;
+    this.givenName = givenName;
+    this.familyName = familyName;
+    this.birthday = birthday;
+    this.favorites = favorites;
+    this.relevantLocation = relevantLocation;
+  }
 
-    public void setPersonMalId(Integer personMalId) {
-        this.personMalId = personMalId;
-    }
+  // Getters and Setters
+  public Integer getPersonMalId() {
+    return personMalId;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public void setPersonMalId(Integer personMalId) {
+    this.personMalId = personMalId;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public String getWebsiteUrl() {
-        return websiteUrl;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public void setWebsiteUrl(String websiteUrl) {
-        this.websiteUrl = websiteUrl;
-    }
+  public String getWebsiteUrl() {
+    return websiteUrl;
+  }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
+  public void setWebsiteUrl(String websiteUrl) {
+    this.websiteUrl = websiteUrl;
+  }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+  public String getImageUrl() {
+    return imageUrl;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getGivenName() {
-        return givenName;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
-    }
+  public String getGivenName() {
+    return givenName;
+  }
 
-    public String getFamilyName() {
-        return familyName;
-    }
+  public void setGivenName(String givenName) {
+    this.givenName = givenName;
+  }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
-    }
+  public String getFamilyName() {
+    return familyName;
+  }
 
-    public LocalDate getBirthday() {
-        return birthday;
-    }
+  public void setFamilyName(String familyName) {
+    this.familyName = familyName;
+  }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
+  public LocalDate getBirthday() {
+    return birthday;
+  }
 
-    public Integer getFavorites() {
-        return favorites;
-    }
+  public void setBirthday(LocalDate birthday) {
+    this.birthday = birthday;
+  }
 
-    public void setFavorites(Integer favorites) {
-        this.favorites = favorites;
-    }
+  public Integer getFavorites() {
+    return favorites;
+  }
 
-    public String getRelevantLocation() {
-        return relevantLocation;
-    }
+  public void setFavorites(Integer favorites) {
+    this.favorites = favorites;
+  }
 
-    public void setRelevantLocation(String relevantLocation) {
-        this.relevantLocation = relevantLocation;
-    }
+  public String getRelevantLocation() {
+    return relevantLocation;
+  }
 
-    @Override
-    public String toString() {
-        return "PersonDetails{" +
-                "personMalId=" + personMalId +
-                ", name='" + name + '\'' +
-                ", givenName='" + givenName + '\'' +
-                ", familyName='" + familyName + '\'' +
-                ", birthday=" + birthday +
-                ", favorites=" + favorites +
-                '}';
-    }
+  public void setRelevantLocation(String relevantLocation) {
+    this.relevantLocation = relevantLocation;
+  }
+
+  @Override
+  public String toString() {
+    return "PersonDetails{"
+        + "personMalId="
+        + personMalId
+        + ", name='"
+        + name
+        + '\''
+        + ", givenName='"
+        + givenName
+        + '\''
+        + ", familyName='"
+        + familyName
+        + '\''
+        + ", birthday="
+        + birthday
+        + ", favorites="
+        + favorites
+        + '}';
+  }
 }

@@ -12,70 +12,47 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProfilesRepository extends JpaRepository<Profiles, String> {
 
-    /**
-     * Search by username (case-insensitive, partial match)
-     */
-    @Query("SELECT e FROM Profiles e WHERE LOWER(CAST(e.username AS string)) LIKE LOWER(CONCAT('%', :search, '%'))")
-    Page<Profiles> searchByUsername(@Param("search") String search, Pageable pageable);
+  /** Search by username (case-insensitive, partial match) */
+  @Query(
+      "SELECT e FROM Profiles e WHERE LOWER(CAST(e.username AS string)) LIKE LOWER(CONCAT('%', :search, '%'))")
+  Page<Profiles> searchByUsername(@Param("search") String search, Pageable pageable);
 
-    /**
-     * Find by gender
-     */
-    Page<Profiles> findByGender(String gender, Pageable pageable);
+  /** Find by gender */
+  Page<Profiles> findByGender(String gender, Pageable pageable);
 
-    /**
-     * Find by location
-     */
-    Page<Profiles> findByLocation(String location, Pageable pageable);
+  /** Find by location */
+  Page<Profiles> findByLocation(String location, Pageable pageable);
 
-    // ============================================================
-    // NULL FILTERING METHODS
-    // ============================================================
+  // ============================================================
+  // NULL FILTERING METHODS
+  // ============================================================
 
-    /**
-     * Find all profiles where gender IS NULL
-     */
-    Page<Profiles> findByGenderIsNull(Pageable pageable);
+  /** Find all profiles where gender IS NULL */
+  Page<Profiles> findByGenderIsNull(Pageable pageable);
 
-    /**
-     * Find all profiles where gender IS NOT NULL
-     */
-    Page<Profiles> findByGenderIsNotNull(Pageable pageable);
+  /** Find all profiles where gender IS NOT NULL */
+  Page<Profiles> findByGenderIsNotNull(Pageable pageable);
 
-    /**
-     * Find all profiles where birthday IS NULL
-     */
-    Page<Profiles> findByBirthdayIsNull(Pageable pageable);
+  /** Find all profiles where birthday IS NULL */
+  Page<Profiles> findByBirthdayIsNull(Pageable pageable);
 
-    /**
-     * Find all profiles where birthday IS NOT NULL
-     */
-    Page<Profiles> findByBirthdayIsNotNull(Pageable pageable);
+  /** Find all profiles where birthday IS NOT NULL */
+  Page<Profiles> findByBirthdayIsNotNull(Pageable pageable);
 
-    /**
-     * Find all profiles where location IS NULL
-     */
-    Page<Profiles> findByLocationIsNull(Pageable pageable);
+  /** Find all profiles where location IS NULL */
+  Page<Profiles> findByLocationIsNull(Pageable pageable);
 
-    /**
-     * Find all profiles where location IS NOT NULL
-     */
-    Page<Profiles> findByLocationIsNotNull(Pageable pageable);
+  /** Find all profiles where location IS NOT NULL */
+  Page<Profiles> findByLocationIsNotNull(Pageable pageable);
 
-    // Count methods for statistics
+  // Count methods for statistics
 
-    /**
-     * Count profiles with null gender
-     */
-    long countByGenderIsNull();
+  /** Count profiles with null gender */
+  long countByGenderIsNull();
 
-    /**
-     * Count profiles with null birthday
-     */
-    long countByBirthdayIsNull();
+  /** Count profiles with null birthday */
+  long countByBirthdayIsNull();
 
-    /**
-     * Count profiles with null location
-     */
-    long countByLocationIsNull();
+  /** Count profiles with null location */
+  long countByLocationIsNull();
 }

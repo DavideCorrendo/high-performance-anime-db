@@ -10,17 +10,14 @@ import org.springframework.stereotype.Repository;
 
 @Hidden
 @Repository
-public interface PersonAlternateNamesRepository extends JpaRepository<PersonAlternateNames, PersonAlternateNames.PersonAlternateNamesId> {
+public interface PersonAlternateNamesRepository
+    extends JpaRepository<PersonAlternateNames, PersonAlternateNames.PersonAlternateNamesId> {
 
-    /**
-     * Search by alt_name (case-insensitive, partial match)
-     */
-    @Query("SELECT e FROM PersonAlternateNames e WHERE LOWER(CAST(e.altName AS string)) LIKE LOWER(CONCAT('%', :search, '%'))")
-    Page<PersonAlternateNames> searchByAltName(@Param("search") String search, Pageable pageable);
+  /** Search by alt_name (case-insensitive, partial match) */
+  @Query(
+      "SELECT e FROM PersonAlternateNames e WHERE LOWER(CAST(e.altName AS string)) LIKE LOWER(CONCAT('%', :search, '%'))")
+  Page<PersonAlternateNames> searchByAltName(@Param("search") String search, Pageable pageable);
 
-    /**
-     * Find by person_mal_id
-     */
-    Page<PersonAlternateNames> findByPersonMalId(Integer personMalId, Pageable pageable);
-
+  /** Find by person_mal_id */
+  Page<PersonAlternateNames> findByPersonMalId(Integer personMalId, Pageable pageable);
 }

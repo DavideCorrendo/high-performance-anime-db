@@ -24,23 +24,16 @@ const favService = require("../services/favService");
  */
 exports.getFavs = async (req, res) => {
     try {
-        // Extract parameters from the query string (e.g. ?page=1&limit=10)
         const params = req.query;
-
-        // Delegate logic to the service layer
         const data = await favService.fetchFavorites(params);
 
-        // Handle case where no data is found
         if (!data || data.length === 0) {
-            return res.status(404).json({ message: "No favorites found" });
+            return res.status(200).json([]);
         }
 
-        // Send the JSON response back to the browser with HTTP 200 OK
         return res.json(data);
     } catch (error) {
-        // Log the internal error for debugging
         console.error("Error fetching favorites:", error);
-        // Return a generic 500 Internal Server Error to the client
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
